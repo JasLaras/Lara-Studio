@@ -68,7 +68,20 @@ img { max-width: 100%; display: block; }
 .tile-1 { background: #D8D4D9; color: #4F4B52; }
 .tile-2 { background: #CBD1D4; color: #454C50; }
 .tile-3 { background: #E0D0D0; color: #574848; }
-.tile-4 { background: #C6CEC6; color: #445044; }
+
+/* Photo in the Info section */
+.info-photo {
+  flex: 0 1 220px;
+  min-width: 0;
+  align-self: flex-start;
+  overflow: hidden;
+  background: #C6CEC6;
+  color: #445044;
+  padding: 16px;
+}
+.info-photo span { font-size: 12px; }
+.info-photo img { width: 100%; height: auto; display: block; }
+.info-photo.has-photo { padding: 0; }
 
 /* Statement */
 .statement {

@@ -2,21 +2,12 @@
 const SITE = {
   name: 'Lara Studio',          // shows in the header, footer and browser tab
   city: 'Davis | Los Angeles',
-  song: 'Indigo Puff, Sundara Karma ',    // shown until the live lookup below works
+  song: 'Indigo Puff, Sundara Karma',    // shown until the live lookup below works
   email: 'jasminesaldano@gmail.com',
 
-  // Live "Now playing" from Last.fm. Pick ONE way to set it up:
-  //
-  // 1) Keeps your key out of this repo (recommended): deploy worker.js to
-  //    Cloudflare, store the key there, and paste the worker's URL as proxyUrl.
-  //    Leave user and apiKey empty.
-  //
-  // 2) Quick and simple: fill in user and apiKey. The key then sits in this
-  //    file and in the page code anyone can view. Leave proxyUrl empty.
-  //
-  // Leave everything empty to keep the song text above.
+  // Live "Now playing" from Last.fm, through your Cloudflare Worker.
   lastfm: {
-    proxyUrl: 'https://now-playing.jazsaldano.workers.dev',  
+    proxyUrl: 'https://now-playing.jazsaldano.workers.dev',
     user: '',
     apiKey: '',
   },
@@ -30,12 +21,16 @@ const SITE = {
     github: 'https://github.com/JasLaras',
   },
 
-  // Add photos by putting files in an "images" folder next to index.html,
-  // then listing them here in order. Up to 4 replace the gray tiles.
-  // Example: { src: 'images/desk.jpg', alt: 'My desk setup' }
+  // Photos go in an "images" folder next to index.html.
+  // The first 3 replace the gray tiles at the top.
   photos: [
-    // { src: 'images/photo-1.jpg', alt: 'Describe the photo' },
+    { src: 'images/foto1.png', alt: 'Describe the first photo' },
+    { src: 'images/foto3.png', alt: 'Describe the second photo' },
+    { src: 'images/foto2.png', alt: 'Describe the third photo' },
   ],
+
+  // The photo in the Info section.
+  infoPhoto: { src: 'images/foto4.png', alt: 'Portrait behind a fan' },
 };
 
 // ---- Nothing below needs editing ----
@@ -100,3 +95,13 @@ document.querySelectorAll('[data-photo]').forEach((tile, i) => {
   tile.replaceChildren(img);
   tile.classList.add('has-photo');
 });
+
+const infoSlot = document.querySelector('[data-info-photo]');
+if (infoSlot && SITE.infoPhoto) {
+  const img = document.createElement('img');
+  img.src = SITE.infoPhoto.src;
+  img.alt = SITE.infoPhoto.alt || '';
+  img.loading = 'lazy';
+  infoSlot.replaceChildren(img);
+  infoSlot.classList.add('has-photo');
+}
