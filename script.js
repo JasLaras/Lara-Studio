@@ -60,6 +60,13 @@ document.querySelectorAll('[data-link]').forEach((el) => {
   }
 });
 
+const songLink = document.querySelector('[data-song-link]');
+const spotifySearch = (query) =>
+  'https://open.spotify.com/search/' + encodeURIComponent(query);
+
+// Until the live lookup answers, link the typed song
+if (songLink) songLink.href = spotifySearch(SITE.song);
+
 async function loadNowPlaying() {
   const { proxyUrl, user, apiKey } = SITE.lastfm;
   let url = proxyUrl;
@@ -79,6 +86,7 @@ async function loadNowPlaying() {
     const playing = Boolean(track['@attr'] && track['@attr'].nowplaying === 'true');
     setText('[data-song-label]', playing ? 'Now playing:' : 'Last played:');
     setText('[data-song]', track.name + ' - ' + track.artist['#text']);
+    if (songLink) songLink.href = spotifySearch(track.name + ' ' + track.artist['#text']);
   } catch (err) {
     // Keep the fallback text from SITE.song.
   }

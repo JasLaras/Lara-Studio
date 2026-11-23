@@ -34,6 +34,12 @@ img { max-width: 100%; display: block; }
 
 .muted, .muted-text { color: var(--muted); }
 
+.muted a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.muted a:hover { color: var(--ink); }
+
 /* Header */
 .header {
   display: flex;
