@@ -25,9 +25,9 @@ const SITE = {
   // Photos go in an "images" folder next to index.html.
   // The first 3 replace the gray tiles at the top.
   photos: [
-    { src: 'images/foto1.png', alt: 'Describe the first photo' },
-    { src: 'images/foto3.png', alt: 'Describe the second photo' },
-    { src: 'images/foto2.png', alt: 'Describe the third photo' },
+    { src: 'images/foto1.png', caption: 'Laguna Beach, California' },
+    { src: 'images/foto2.png', caption: 'Calzedonia, flats, and rain' },
+    { src: 'images/foto3.png', caption: "Grandmother's figs, Izmir" },
   ],
 
   // The photo in the Info section.
@@ -105,4 +105,33 @@ if (infoSlot && SITE.infoPhoto) {
   img.loading = 'lazy';
   infoSlot.replaceChildren(img);
   infoSlot.classList.add('has-photo');
+}
+
+// Fade in on load and on scroll
+const revealEls = document.querySelectorAll(
+  '.tile, .statement > *, .block > :not(.rows):not(.contact), .row, .contact > *'
+);
+
+// Stagger siblings so they arrive one after another
+const seen = new Map();
+revealEls.forEach((el) => {
+  el.classList.add('reveal');
+  const parent = el.parentElement;
+  const n = seen.get(parent) || 0;
+  el.style.setProperty('--delay', Math.min(n * 0.12, 0.4) + 's');
+  seen.set(parent, n + 1);
+});
+
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  revealEls.forEach((el) => io.observe(el));
+} else {
+  revealEls.forEach((el) => el.classList.add('is-visible'));
 }
