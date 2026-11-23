@@ -19,6 +19,7 @@ const SITE = {
     // amazon: 'https://www.amazon.com/',
     // linktree: 'https://linktr.ee/laramuse',
     github: 'https://github.com/JasLaras',
+    linkedin: 'https://www.linkedin.com/in/jaslaras'
   },
 
   // Photos go in an "images" folder next to index.html.
