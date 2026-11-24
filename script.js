@@ -26,8 +26,8 @@ const SITE = {
   // The first 3 replace the gray tiles at the top.
   photos: [
     { src: 'images/foto1.png', caption: 'Laguna Beach, California' },
-    { src: 'images/foto2.png', caption: 'Calzedonia, flats, and rain' },
-    { src: 'images/foto3.png', caption: "Grandmother's figs, Izmir" },
+    { src: 'images/foto2.png', caption: "Grandmother's figs, Izmir" },
+    { src: 'images/foto3.png', caption: "Calzedonia and rain, Davis" },
   ],
 
   // The photo in the Info section.
@@ -99,10 +99,40 @@ document.querySelectorAll('[data-photo]').forEach((tile, i) => {
   if (!photo) return;
   const img = document.createElement('img');
   img.src = photo.src;
-  img.alt = photo.alt || '';
+  img.alt = photo.alt || photo.caption || '';
   img.loading = 'lazy';
   tile.replaceChildren(img);
   tile.classList.add('has-photo');
+
+  if (photo.caption) {
+    const cap = document.createElement('span');
+    cap.className = 'tile-caption mono';
+    cap.textContent = photo.caption;
+    tile.append(cap);
+
+    tile.tabIndex = 0;
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('aria-expanded', 'false');
+
+    const toggle = () => {
+      const open = !tile.classList.contains('show');
+      document.querySelectorAll('.tile.show').forEach((t) => {
+        t.classList.remove('show');
+        t.setAttribute('aria-expanded', 'false');
+      });
+      if (open) {
+        tile.classList.add('show');
+        tile.setAttribute('aria-expanded', 'true');
+      }
+    };
+    tile.addEventListener('click', toggle);
+    tile.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle();
+      }
+    });
+  }
 });
 
 const infoSlot = document.querySelector('[data-info-photo]');
