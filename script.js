@@ -84,7 +84,7 @@ async function loadNowPlaying() {
     if (Array.isArray(track)) track = track[0];
     if (!track) return;
     const playing = Boolean(track['@attr'] && track['@attr'].nowplaying === 'true');
-    setText('[data-song-label]', playing ? 'Now playing:' : 'Last played:');
+    setText('[data-song-label]', playing ? 'Now playing in the studio:' : 'Last played in the studio:');
     setText('[data-song]', track.name + ' - ' + track.artist['#text']);
     if (songLink) songLink.href = spotifySearch(track.name + ' ' + track.artist['#text']);
   } catch (err) {
